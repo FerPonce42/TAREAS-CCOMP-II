@@ -47,9 +47,13 @@ string uni(int n) {
 // DECENAS A TEXTO
 string dec(int n) {
     const char* decenastext[] = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+    
     if (n < 20) {
         const char* casoespecial[] = {"diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"};
         return casoespecial[n - 10]; // 10-19
+    } else if (n >= 21 && n <= 29) {
+        const char* casoespecial21_29[] = {"veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"};
+        return casoespecial21_29[n - 21]; // 21-29
     } else if (n % 10 == 0) {
         return decenastext[n / 10]; // 20, 30, 40...
     } else {
