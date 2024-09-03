@@ -1,11 +1,7 @@
 #include <iostream>
 #include <string>
-using namespace std;
 
-string uni(int n);
-string dec(int n);
-string cen(int n);
-string mil(int n);
+using namespace std;
 
 // CONVERTIDOR:
 string numero_texto(int n) {
@@ -15,67 +11,49 @@ string numero_texto(int n) {
 
     string texto = "";
 
-    // Designo las condiciones.
+    // Arreglos de texto para unidades, decenas y centenas.
+    const char* unidadestex[] = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
+    const char* decenastext[] = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
+    const char* centenastext[] = {"", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"};
+
+    // MILES
     if (n >= 1000) {
-        texto += mil(n / 1000) + " mil ";
+        int miles = n / 1000;
+        texto += (miles == 1 ? "" : numero_texto(miles)) + " mil ";
         n %= 1000;
     }
 
+    // CENTENAS
     if (n >= 100) {
-        texto += cen(n / 100);
+        int centenas = n / 100;
+        texto += (centenas == 1 && n % 100 == 0) ? "cien" : centenastext[centenas];
         n %= 100;
         if (n > 0) {
             texto += " ";
         }
     }
 
-    if (n >= 10) {
-        texto += dec(n);
+    // CASOS ESPECIALES 10-19
+    if (n >= 10 && n < 20) {
+        const char* casoespecial[] = {"diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"};
+        texto += casoespecial[n - 10];
+    }
+    // CASOS ESPECIALES 21-29
+    else if (n >= 21 && n < 30) {
+        const char* casoespecial21_29[] = {"veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"};
+        texto += casoespecial21_29[n - 21];
+    }
+    // DECENAS Y UNIDADES
+    else if (n >= 20) {
+        texto += decenastext[n / 10];
+        if (n % 10 > 0) {
+            texto += " y " + string(unidadestex[n % 10]);
+        }
     } else if (n > 0) {
-        texto += uni(n);
+        texto += unidadestex[n];
     }
 
     return texto;
-}
-
-// UNIDADES A TEXTO:
-string uni(int n) {
-    const char* unidadestex[] = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
-    return unidadestex[n];
-}
-
-// DECENAS A TEXTO
-string dec(int n) {
-    const char* decenastext[] = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
-    
-    if (n < 20) {
-        const char* casoespecial[] = {"diez", "once", "doce", "trece", "catorce", "quince", "dieciséis", "diecisiete", "dieciocho", "diecinueve"};
-        return casoespecial[n - 10]; // 10-19
-    } else if (n >= 21 && n <= 29) {
-        const char* casoespecial21_29[] = {"veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"};
-        return casoespecial21_29[n - 21]; // 21-29
-    } else if (n % 10 == 0) {
-        return decenastext[n / 10]; // 20, 30, 40...
-    } else {
-        return string(decenastext[n / 10]) + " y " + uni(n % 10); // Concateno decenas y unidades
-    }
-}
-
-// CENTENAS A TEXTO
-string cen(int n) {
-    const char* centenastext[] = {"", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"};
-    if (n == 100) {
-        return "cien";
-    }
-    return centenastext[n];
-}
-
-// MILES A TEXTO
-string mil(int n) {
-    if (n == 1) {
-        return "";
-    }
-    return numero_texto(n);
 }
 
 // FINALMENTE:
