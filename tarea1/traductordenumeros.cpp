@@ -3,25 +3,13 @@
 
 using namespace std;
 
-// CONVERTIDOR:
-string numero_texto(int n) {
-    if (n == 0) {
-        return "cero";
-    }
-
+// lo que le sigue de los mil
+string convertir_restantes(int n, bool esMiles) {
     string texto = "";
 
-    // Arreglos de texto para unidades, decenas y centenas.
     const char* unidadestex[] = {"", "uno", "dos", "tres", "cuatro", "cinco", "seis", "siete", "ocho", "nueve"};
     const char* decenastext[] = {"", "diez", "veinte", "treinta", "cuarenta", "cincuenta", "sesenta", "setenta", "ochenta", "noventa"};
     const char* centenastext[] = {"", "ciento", "doscientos", "trescientos", "cuatrocientos", "quinientos", "seiscientos", "setecientos", "ochocientos", "novecientos"};
-
-    // MILES
-    if (n >= 1000) {
-        int miles = n / 1000;
-        texto += (miles == 1 ? "" : numero_texto(miles)) + " mil ";
-        n %= 1000;
-    }
 
     // CENTENAS
     if (n >= 100) {
@@ -40,8 +28,12 @@ string numero_texto(int n) {
     }
     // CASOS ESPECIALES 21-29
     else if (n >= 21 && n < 30) {
-        const char* casoespecial21_29[] = {"veintiuno", "veintidós", "veintitrés", "veinticuatro", "veinticinco", "veintiséis", "veintisiete", "veintiocho", "veintinueve"};
-        texto += casoespecial21_29[n - 21];
+        const char* casoespecial21_29[] = {"veintiuno", "veintidos", "veintitres", "veinticuatro", "veinticinco", "veintiseis", "veintisiete", "veintiocho", "veintinueve"};
+        if (esMiles && n == 21) {
+            texto += "veintiun";  // Caso especial
+        } else {
+            texto += casoespecial21_29[n - 21];
+        }
     }
     // DECENAS Y UNIDADES
     else if (n >= 20) {
@@ -50,8 +42,42 @@ string numero_texto(int n) {
             texto += " y " + string(unidadestex[n % 10]);
         }
     } else if (n > 0) {
-        texto += unidadestex[n];
+        // Caso especial: "un" en lugar de "uno" si es seguido de "mil"
+        if (n == 1 && esMiles) {
+            texto += "un";
+        } else {
+            texto += unidadestex[n];
+        }
     }
+
+    return texto;
+}
+
+// CONVERTIDOR PRINCIPAL
+string primer_convertidor(int n) {
+    if (n == 0) {
+        return "cero";
+    }
+
+    string texto = "";
+
+    // MILES
+    if (n >= 1000) {
+        int miles = n / 1000;
+        int resto = n % 1000;
+
+        if (miles == 1) {
+            texto += "mil";
+        } else {
+            texto += convertir_restantes(miles, true);  // `true` indica que estamos en la parte de miles
+            texto += " mil";
+        }
+
+        n = resto;
+    }
+
+    // Añadimos la parte menor de 1000
+    texto += convertir_restantes(n, false);  // `false` indica que ya no estamos en la parte de miles
 
     return texto;
 }
@@ -67,7 +93,7 @@ int main() {
         return 1;
     }
 
-    string texto = numero_texto(numerito);
+    string texto = primer_convertidor(numerito);
     cout << numerito << " = " << texto << endl;
 
     return 0;
