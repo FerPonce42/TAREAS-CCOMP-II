@@ -1,15 +1,15 @@
 #include <iostream>
 using namespace std;
 
-// Función merge del profe
-void merge(int *pares_ptr, int *impares_ptr, int tamano_total) {
-    int tamano_pares = tamano_total / 2;  // Tamaño de la primera mitad (pares)
-    int tamano_impares = tamano_total - tamano_pares;  // Tamaño de la segunda mitad (impares)
+// Función merge para mezclar las dos mitades del arreglo
+void merge(int *pares_ptr, int *impares_ptr, int tamaño_total) {
+    int tamaño_pares = tamaño_total / 2;  // Tamaño de la primera mitad (pares)
+    int tamaño_impares = tamaño_total - tamaño_pares;  // Tamaño de la segunda mitad (impares)
 
-    int *result = new int[tamano_total];  // Arreglo temporal dinámico
+    int *result = new int[tamaño_total];  // Arreglo temporal dinámico
     int *result_ptr = result; // Puntero al inicio del arreglo resultante
     int *final_pares = impares_ptr;  // Fin de la primera mitad (pares)
-    int *final_impares = impares_ptr + tamano_impares; // Fin de la segunda mitad (impares)
+    int *final_impares = impares_ptr + tamaño_impares; // Fin de la segunda mitad (impares)
 
     // Mezclamos mientras ambos punteros tengan elementos válidos
     while (pares_ptr < final_pares && impares_ptr < final_impares) {
@@ -17,7 +17,7 @@ void merge(int *pares_ptr, int *impares_ptr, int tamano_total) {
             *result_ptr = *pares_ptr;  // Copiamos el valor menor desde los pares
             pares_ptr++;      // Avanzamos el puntero de pares
         } else {
-            *result_ptr = *impares_ptr;  // Copioel valor menor desde los impares
+            *result_ptr = *impares_ptr;  // Copiamos el valor menor desde los impares
             impares_ptr++;      // Avanzamos el puntero de impares
         }
         result_ptr++;          // Avanzamos en el arreglo resultante
@@ -38,27 +38,28 @@ void merge(int *pares_ptr, int *impares_ptr, int tamano_total) {
     }
 
     // Copiamos el contenido de result de vuelta al arreglo original
-    for (int i = 0; i < tamano_total; i++) {
-        *(pares_ptr - tamano_pares + i) = result[i];
+    for (int i = 0; i < tamaño_total; i++) {
+        *(pares_ptr - tamaño_pares + i) = result[i];
     }
 
-    delete[] result;  // Liberamos la memoria del arreglo temporal
+    delete[] result;  
 }
 
 int main() {
     
     int arr[] = {2, 6, 8, 12, 20, 1, 3, 7, 11, 15};
-    int tamano = sizeof(arr) / sizeof(arr[0]);
+    int tamaño = sizeof(arr) / sizeof(arr[0]);
 
     // Punteros que indican las dos mitades del arreglo
     int *pares_ptr = arr;         // Puntero al inicio del arreglo (pares)
-    int *impares_ptr = arr + tamano / 2;  // Puntero al inicio de la segunda mitad (impares)
+    int *impares_ptr = arr + tamaño / 2;  // Puntero al inicio de la segunda mitad (impares)
 
-    // Llamo al merg
-    merge(pares_ptr, impares_ptr, tamano);
+ 
+    merge(pares_ptr, impares_ptr, tamaño);
 
-    cout << "100% FE: ";
-    for (int i = 0; i < tamano; i++) {
+ 
+    cout << "ELIJO CREER = ";
+    for (int i = 0; i < tamaño; i++) {
         cout << arr[i] << " ";
     }
     cout << endl;
