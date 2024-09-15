@@ -33,7 +33,8 @@ int main() {
 
  
     cout << "DECIDO CREER ";
-    int *ptr = arr;  // Puntero al inicio 
+    int *ptr = arr;  // Puntero al iniciio
+
     while (ptr < arr + tamaño) {
         cout << *ptr << " "; 
         ptr++; 
