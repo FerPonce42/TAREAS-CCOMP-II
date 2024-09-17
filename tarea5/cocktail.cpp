@@ -39,13 +39,13 @@ void cocktail(int* arr, int n) {
 }
 
 int main() {
-    int arr[] = {51, 3, 28, 35, 4, 2, 7, 23, 15};  
-    int n = sizeof(arr) / sizeof(arr[0]);          
+    int A[] = {51, 3, 28, 35, 4, 2, 7, 23, 15};  
+    int tamaño = sizeof(A) / sizeof(A[0]);          
 
-    cocktail(arr, n);
+    cocktail(A, tamaño);
 
     cout << "Array ordenado: ";
-    for (int* p = arr; p < arr + n; ++p) {
+    for (int* p = A; p < A + tamaño; ++p) {
         cout << *p << " ";
     }
     cout << endl;

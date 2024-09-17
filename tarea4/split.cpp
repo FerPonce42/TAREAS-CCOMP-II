@@ -18,12 +18,12 @@ void Split(int *ini, int *fin) {
 }
 
 int main() {
-    int arr[] = {1, 2, 3, 4, 5, 6, 7, 8};  
-    int size = sizeof(arr) / sizeof(arr[0]);
+    int A[] = {1, 2, 3, 4, 5, 6, 7, 8};  
+    int size = sizeof(A) / sizeof(A[0]);
 
-    Split(arr, arr + size);  
+    Split(A, A + size);  
 
-    for (int *ptr = arr; ptr < arr + size; ptr++) {
+    for (int *ptr = A; ptr < A + size; ptr++) {
         cout << *ptr << " ";
     }
 
