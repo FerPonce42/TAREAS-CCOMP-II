@@ -1,4 +1,5 @@
 #include <iostream>
+
 using namespace std;
 
 void swap(int *a, int *b) {
@@ -7,37 +8,54 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
-void merge(int *inicio, int tamaño) {
-    int *ptr1 = inicio;
-    int *ptr2;
+void merge(int *p, int *q) {
+    int *fin = q + 5;  // Fin del arreglo
+    int *izquierda = p; // Puntero izquierdo
+    int *derecha = q;   // Puntero derecho
 
-    while (ptr1 < inicio + tamaño) {
-        ptr2 = ptr1 + 1; // se compara con el sigueinte
-        while (ptr2 < inicio + tamaño) {
-            if (*ptr1 > *ptr2) {
-                // Si ptr1 > Intercambio valores
-                swap(ptr1, ptr2);
-            }
-            ptr2++;  // next next
+    // ORDENAR PARES
+    while (p < q - 1) {
+        if (*p > *(p + 1)) {
+            swap(p, p + 1);
         }
-        ptr1++;  // avanza el primero puntero
+        p++;
+    }
+
+    // ORDENAR IMPARES
+    while (q < fin - 1) {
+        if (*q > *(q + 1)) {
+            swap(q, q + 1);
+        }
+        q++;
+    }
+
+    // FUSIONAR LAS MITADES
+    while (izquierda < q && derecha < fin) {
+        if (*izquierda > *derecha) {
+            int temp = *derecha;
+            int *mover = derecha;
+            while (mover > izquierda) {
+                *mover = *(mover - 1);
+                mover--;
+            }
+            *izquierda = temp;
+            derecha++;
+        }
+        izquierda++;
     }
 }
 
 int main() {
-    int arr[] = {12, 2, 20, 8, 6, 15, 3, 7, 11, 1};
-    int tamaño = sizeof(arr) / sizeof(arr[0]);
+    int A[] = {2, 6, 8, 12, 20, 1, 3, 7, 11, 15};
+    int tamaño = sizeof(A) / sizeof(A[0]);
 
-    
-    merge(arr, tamaño);
+    merge(A, A + 5);
 
- 
-    cout << "DECIDO CREER ";
-    int *ptr = arr;  // Puntero al iniciio
-
-    while (ptr < arr + tamaño) {
-        cout << *ptr << " "; 
-        ptr++; 
+    cout << "TE LO RUEGO: ";
+    int *ptr = A;
+    while (ptr < A + tamaño) {
+        cout << *ptr << " ";
+        ptr++;
     }
     cout << endl;
 
