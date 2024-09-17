@@ -19,11 +19,11 @@ void Split(int *ini, int *fin) {
 
 int main() {
     int A[] = {1, 2, 3, 4, 5, 6, 7, 8};  
-    int size = sizeof(A) / sizeof(A[0]);
+    int tamaño = sizeof(A) / sizeof(A[0]);
 
-    Split(A, A + size);  
+    Split(A, A + tamaño);  
 
-    for (int *ptr = A; ptr < A + size; ptr++) {
+    for (int *ptr = A; ptr < A + tamaño; ptr++) {
         cout << *ptr << " ";
     }
 
