@@ -1,20 +1,44 @@
 #include <iostream>
 using namespace std;
 
-int main() {
-    //int A[] = {1,2,3,4,5,6,7,8,9,10};
-    //int A[] = {1,2,3,4,5,6};
-    //int A[] = {1,2,3,4,5,6,7,8,9,10,11,12,13,14};
-    int A[]={32,42,76,234,76,24,754,11,44,27};
+void merge(int* p, int* q) {
+    int* fin = q + (q - p) + (q - (p + (q - p)));
 
-    int *p = A;
-    int *fin = A + (sizeof(A) / sizeof(A[0])) - 1;  // Puntero al último elemento
-    int *q = p + ((fin - p) / 2);
+    while ((p < q) && (q < fin)) {
+        if (*p < *q) {
+            p++;
+        } else {
+            int* r = q;
+            int temp = *q;
 
-    // Imprimir el valor en la mitad del arreglo
-    cout << *p << endl;
-    cout << *q << endl;
+            while (r > p) {
+                *r = *(r - 1);
+                r--;
+            }
 
-
-    return 0;
+            *p = temp;
+            p++;
+            q++;
+        }
+    }
 }
+
+int main() {
+    int A[] = {2, 10, 12, 32, 42, 1, 5, 11, 27, 39};
+    int* p = A;
+    int* q = A + (sizeof(A) / sizeof(A[0])) / 2;  
+
+    for (int* ptr = p; ptr < p + (sizeof(A) / sizeof(A[0])); ++ptr) {
+        cout << *ptr << " ";
+    }
+    cout << endl; 
+
+    merge(p, q);
+
+    for (int* ptr = p; ptr < p + (sizeof(A) / sizeof(A[0])); ++ptr) {
+        cout << *ptr << " ";
+    }
+    cout << endl; 
+
+}
+
