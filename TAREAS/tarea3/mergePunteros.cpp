@@ -2,8 +2,8 @@
 using namespace std;
 
 void merge(int* p, int* q) {
-    int* fin = q + (q - p) + (q - (p + (q - p)));
-
+    int* fin = q + (q - p);
+    
     while ((p < q) && (q < fin)) {
         if (*p < *q) {
             p++;
