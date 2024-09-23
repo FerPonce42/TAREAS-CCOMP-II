@@ -1,52 +1,54 @@
 #include <iostream>
 using namespace std;
 
-void cocktail(int* arr, int n) {
-    bool hayintercambio = true;
-    int* ini = arr;           
-    int* fin = arr + n - 1;   
+void cocktail(int* p, int* q) {
+    bool cambio = true;
 
-    while (ini < fin && hayintercambio) {
-        hayintercambio = false;
+    while (p < q && cambio) {
+        cambio = false;
 
-        // Movimiento de izquierda a derecha
-        for (int* p = ini; p < fin; ++p) {
-            if (*p > *(p + 1)) {
-                swap(*p, *(p + 1));
-                hayintercambio = true;
+        for (int* actual = p; actual < q; ++actual) {
+            if (*actual > *(actual + 1)) {
+                int temp = *actual;
+                *actual = *(actual + 1);
+                *(actual + 1) = temp;
+                cambio = true;
             }
         }
+        --q; 
 
-        // Reduzco el rango del final
-        fin--;
+        if (!cambio) break;
 
-        // Si HAY intercambios, el array está ordenado
-        if (!hayintercambio) break;
+        cambio = false;
 
-        hayintercambio = false;
-
-        // Movimiento de derecha a izquierda
-        for (int* p = fin; p > ini; --p) {
-            if (*(p - 1) > *p) {
-                swap(*(p - 1), *p);
-                hayintercambio = true;
+        for (int* actual = q; actual > p; --actual) {
+            if (*actual < *(actual - 1)) {
+                int temp = *actual;
+                *actual = *(actual - 1);
+                *(actual - 1) = temp;
+                cambio = true;
             }
         }
-
-        // Aumentorango del inicio
-        ini++;
+        ++p; 
     }
 }
 
 int main() {
-    int A[] = {51, 3, 28, 35, 4, 2, 7, 23, 15};  
-    int tamaño = sizeof(A) / sizeof(A[0]);          
+    int A[] = {10,9,8,7,6,5,4,3,2,1};
+    int* p = A; 
+    int* q = A + (sizeof(A) / sizeof(A[0])) - 1; 
 
-    cocktail(A, tamaño);
+    cout << "ANTES:  ";
+    for (int* ptr = p; ptr <= q; ++ptr) {
+        cout << *ptr << " ";
+    }
+    cout << endl;
 
-    cout << "Array ordenado: ";
-    for (int* p = A; p < A + tamaño; ++p) {
-        cout << *p << " ";
+    cocktail(p, q);
+
+    cout << "DESPUES: ";
+    for (int* ptr = A; ptr <= q; ++ptr) {
+        cout << *ptr << " ";
     }
     cout << endl;
 
