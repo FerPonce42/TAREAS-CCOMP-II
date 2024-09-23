@@ -1,32 +1,42 @@
 #include <iostream>
 using namespace std;
 
-void Split(int *ini, int *fin) {
-    int *p = ini;  
-    int *r = fin - 1;  
-
-    while (p <= r) {
+void split(int* p, int* q) {
+    while (p < q) {
         if (*p % 2 == 0) {
-            // ES PAR avanzo el puntero p
             p++;
-        } else {
-            // ES IMPAR, intercambio r y reduzco r
-            swap(*p, *r);
-            r--;
+        }
+
+        else if (*q % 2 == 1) {
+            q--;
+        }
+
+        else {
+            *p = *p + *q; 
+            *q = *p - *q;
+            *p = *p - *q;
+            p++;
+            q--;
         }
     }
 }
 
 int main() {
-    int A[] = {1, 2, 3, 4, 5, 6, 7, 8};  
-    int tamaño = sizeof(A) / sizeof(A[0]);
+    int A[] = {3,7,2,6,12,35,8,10,99};
+    int* p = A;  
+    int* q = A + (sizeof(A) / sizeof(A[0])) - 1; 
 
-    Split(A, A + tamaño);  
-
-    for (int *ptr = A; ptr < A + tamaño; ptr++) {
+    cout << "ANTES:  ";
+    for (int* ptr = p; ptr <= q; ++ptr) {
         cout << *ptr << " ";
     }
+    cout << endl;
 
+    split(p, q);
 
-    return 0;
+    cout << "DESPU:  ";
+    for (int* ptr = A; ptr < A + (sizeof(A) / sizeof(A[0])); ++ptr) {
+        cout << *ptr << " ";
+    }
+    cout << endl;
 }
