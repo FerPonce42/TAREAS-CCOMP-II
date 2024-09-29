@@ -1,24 +1,15 @@
 #include <iostream>
 using namespace std;
 
-void split(int*& p, int* q) {
+void split(int* p, int* q) {
     int* r = p; 
     while (p <= q) { 
         if (*p % 2 == 0) {
-            
-            p++; 
-            r++; 
-        } 
-        
-        if (*p % 2 != 0) { 
-            
-            swap(r, q); 
-            while (r > p) { 
-                swap(*p, *r); 
-                r--; 
-            }
-            
-            continue; 
+            swap(*p, *r);
+            r++;
+            p++;
+        } else {
+            p++;
         }
     }
 }
@@ -30,4 +21,5 @@ int main() {
 
     split(p, q);
 
+    return 0;
 }
