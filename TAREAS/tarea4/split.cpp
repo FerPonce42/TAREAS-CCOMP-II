@@ -1,41 +1,33 @@
 #include <iostream>
 using namespace std;
 
-void split(int* p, int* q) {
-    while (p < q) {
-        
+void split(int*& p, int* q) {
+    int* r = p; 
+    while (p <= q) { 
         if (*p % 2 == 0) {
-            p++;
-        }
-       
-        else if (*q % 2 == 1) {
-            q--;
-        }
-       
-        else {
-            swap(*p, *q);
-            p++;
-            q--;
+            
+            p++; 
+            r++; 
+        } 
+        
+        if (*p % 2 != 0) { 
+            
+            swap(r, q); 
+            while (r > p) { 
+                swap(*p, *r); 
+                r--; 
+            }
+            
+            continue; 
         }
     }
 }
 
 int main() {
-    int A[] = {3,7,2,6,12,35,8,10,99}; // ESTO IMPRIME: 10 8 2 6 12 35 7 3 99
+    int A[] = {1, 2, 3, 4, 5, 6, 7, 8}; 
     int* p = A;
     int* q = A + (sizeof(A) / sizeof(A[0])) - 1;
 
-    cout << "ANTES:  ";
-    for (int* ptr = p; ptr <= q; ++ptr) {
-        cout << *ptr << " ";
-    }
-    cout << endl;
-
     split(p, q);
 
-    cout << "DESPUES:  ";
-    for (int* ptr = A; ptr <= q; ++ptr) {
-        cout << *ptr << " ";
-    }
-    cout << endl;
 }
