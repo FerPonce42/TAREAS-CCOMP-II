@@ -34,7 +34,7 @@ void cocktail(int* p, int* q) {
 }
 
 int main() {
-    int A[] = {10,9,8,7,6,5,4,3,2,1};
+    int A[] = {51,3,28,35,4,2,7,23,15};
     int* p = A; 
     int* q = A + (sizeof(A) / sizeof(A[0])) - 1; 
 

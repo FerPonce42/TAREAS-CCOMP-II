@@ -31,7 +31,7 @@ bool palindromo(char* p) {
 }
 
 int main() {
-    char frase[] = "amo la paloma";
+    char frase[] = "aMo    la palOmA";
     char* p = frase;
 
     if (palindromo(p)) {
